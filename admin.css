@@ -1,0 +1,535 @@
+/* =========================
+   INÍCIO: Reset
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #080808;
+  color: #f7f1e6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+/* =========================
+   FIM: Reset
+========================= */
+
+
+/* =========================
+   INÍCIO: Variáveis
+========================= */
+:root {
+  --gold: #d4af37;
+  --gold-2: #f1d67a;
+  --gold-3: #c9971c;
+  --text: #f7f1e6;
+  --muted: #b9b1a3;
+  --border: rgba(212, 175, 55, 0.16);
+  --border-strong: rgba(212, 175, 55, 0.35);
+  --radius: 22px;
+  --shadow-gold: 0 12px 40px rgba(212, 175, 55, 0.12);
+}
+/* =========================
+   FIM: Variáveis
+========================= */
+
+
+/* =========================
+   INÍCIO: Fundo
+========================= */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.14;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 340px;
+  height: 340px;
+  top: -100px;
+  left: -80px;
+  background: var(--gold);
+}
+
+.orb-2 {
+  width: 360px;
+  height: 360px;
+  right: -90px;
+  bottom: -100px;
+  background: #f6d98b;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.16;
+}
+/* =========================
+   FIM: Fundo
+========================= */
+
+
+/* =========================
+   INÍCIO: Utilitários
+========================= */
+.glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03));
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  min-height: 48px;
+  font-weight: 800;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-3));
+  color: #111;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.btn-outline:hover {
+  border-color: var(--border-strong);
+  color: var(--gold-2);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.message {
+  margin-top: 14px;
+  color: var(--gold-2);
+  text-align: center;
+  min-height: 22px;
+}
+/* =========================
+   FIM: Utilitários
+========================= */
+
+
+/* =========================
+   INÍCIO: Login
+========================= */
+.auth-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: min(100%, 430px);
+  padding: 32px 24px;
+}
+
+.auth-card h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.7rem;
+  color: var(--gold-2);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+/* =========================
+   FIM: Login
+========================= */
+
+
+/* =========================
+   INÍCIO: Formulários
+========================= */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--gold-2);
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: rgba(212,175,55,0.45);
+  box-shadow: 0 0 0 4px rgba(212,175,55,0.08);
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.form-check label {
+  color: var(--text);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+/* =========================
+   FIM: Formulários
+========================= */
+
+
+/* =========================
+   INÍCIO: Dashboard
+========================= */
+.dashboard {
+  padding: 20px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.topbar-left h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.1rem;
+  color: var(--gold-2);
+}
+
+.topbar-left p {
+  color: var(--muted);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.user-badge {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.18);
+  color: var(--gold-2);
+  font-weight: 700;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+}
+
+.sidebar {
+  padding: 18px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.tab-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border-radius: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.3s ease;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--gold-2);
+  background: rgba(212,175,55,0.08);
+}
+
+.content-area {
+  min-width: 0;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.panel-head {
+  margin-bottom: 18px;
+}
+
+.panel-head h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2rem;
+  color: var(--gold-2);
+}
+
+.panel-head p {
+  color: var(--muted);
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 20px;
+}
+
+.panel-form-card,
+.panel-list-card {
+  padding: 22px;
+}
+
+.panel-form-card h4,
+.panel-list-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: var(--gold-2);
+}
+/* =========================
+   FIM: Dashboard
+========================= */
+
+
+/* =========================
+   INÍCIO: Listas admin
+========================= */
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-item {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.admin-item-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.admin-item h5 {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.admin-item p {
+  color: var(--muted);
+  font-size: 0.94rem;
+  margin-bottom: 6px;
+}
+
+.admin-item-meta {
+  color: var(--gold-2);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.admin-item-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.global-message {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1000;
+  min-width: 220px;
+  max-width: 340px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(15,15,15,0.95);
+  border: 1px solid rgba(212,175,55,0.25);
+  color: var(--gold-2);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: 0.3s ease;
+}
+
+.global-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* =========================
+   FIM: Listas admin
+========================= */
+
+
+/* =========================
+   INÍCIO: Responsividade
+========================= */
+@media (max-width: 1100px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard {
+    padding: 14px;
+  }
+
+  .topbar-left h2 {
+    font-size: 1.8rem;
+  }
+
+  .panel-head h3 {
+    font-size: 1.7rem;
+  }
+
+  .auth-card,
+  .panel-form-card,
+  .panel-list-card,
+  .sidebar {
+    padding: 18px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  .admin-item-top {
+    flex-direction: column;
+  }
+}
+/* =========================
+   FIM: Responsividade
+========================= */
+
+/* =========================
+   INÍCIO: Melhorias formulário e lista
+========================= */
+.field-help {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.field-help.error {
+  color: #ff9d9d;
+}
+
+.image-preview-wrap {
+  margin-top: 12px;
+}
+
+.image-preview {
+  width: 100%;
+  max-width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.admin-item-content {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.admin-thumb {
+  width: 86px;
+  height: 86px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+/* =========================
+   FIM: Melhorias formulário e lista
+========================= */

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Bar Da Victoria</title>
+  <meta name="description" content="Painel de administração do Bar Da Victoria" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <!-- INÍCIO: Fundo -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+  <!-- FIM: Fundo -->
+
+  <!-- INÍCIO: Login -->
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-card glass-card">
+      <h1>Bar Da Victoria</h1>
+      <p class="auth-subtitle">Painel de Administração</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required />
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Senha</label>
+          <input type="password" id="loginPassword" required />
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-full">
+          Entrar
+        </button>
+      </form>
+
+      <p id="authMessage" class="message"></p>
+    </div>
+  </section>
+  <!-- FIM: Login -->
+
+  <!-- INÍCIO: Painel -->
+  <section class="dashboard hidden" id="dashboard">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2>Admin - Bar Da Victoria</h2>
+        <p>Gerir menu, eventos e galeria</p>
+      </div>
+
+      <div class="topbar-right">
+        <span id="loggedUser" class="user-badge"></span>
+        <button id="logoutBtn" class="btn btn-outline">Sair</button>
+      </div>
+    </header>
+
+    <main class="dashboard-layout">
+      <aside class="sidebar glass-card">
+        <button class="tab-btn active" data-tab="menuTab">Menu</button>
+        <button class="tab-btn" data-tab="eventsTab">Eventos</button>
+        <button class="tab-btn" data-tab="galleryTab">Galeria</button>
+      </aside>
+
+      <section class="content-area">
+        <!-- INÍCIO: MENU TAB -->
+        <div class="tab-panel active" id="menuTab">
+          <div class="panel-head">
+            <h3>CRUD do Menu</h3>
+            <p>Adicionar, editar e apagar itens do menu.</p>
+          </div>
+
+          <div class="panel-grid">
+            <div class="glass-card panel-form-card">
+              <h4 id="menuFormTitle">Novo item do menu</h4>
+
+              <form id="menuForm">
+                <input type="hidden" id="menuId" />
+
+                <div class="form-group">
+                  <label for="menuName">Nome</label>
+                  <input type="text" id="menuName" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="menuDescription">Descrição</label>
+                  <textarea id="menuDescription" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="menuPrice">Preço</label>
+                  <input type="number" id="menuPrice" step="0.01" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="menuImageFile">Imagem</label>
+                  <input type="file" id="menuImageFile" accept="image/*" />
+                  <small class="field-help" id="menuImageStatus">Nenhuma imagem selecionada.</small>
+                  <div class="image-preview-wrap">
+                    <img id="menuImagePreview" class="image-preview hidden" alt="Pré-visualização do item do menu" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="menuImageUrl">URL da imagem</label>
+                  <input type="text" id="menuImageUrl" readonly />
+                </div>
+
+                <div class="form-group">
+                  <label for="menuBadge">Badge</label>
+                  <input type="text" id="menuBadge" placeholder="Ex: Destaque" />
+                </div>
+
+                <div class="form-group">
+                  <label for="menuSortOrder">Ordem</label>
+                  <input type="number" id="menuSortOrder" value="0" />
+                </div>
+
+                <div class="form-check">
+                  <input type="checkbox" id="menuAvailable" checked />
+                  <label for="menuAvailable">Disponível</label>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold">Salvar</button>
+                  <button type="button" class="btn btn-outline" id="menuCancelBtn">Cancelar</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="glass-card panel-list-card">
+              <h4>Itens cadastrados</h4>
+              <div id="menuList" class="admin-list"></div>
+            </div>
+          </div>
+        </div>
+        <!-- FIM: MENU TAB -->
+
+        <!-- INÍCIO: EVENTS TAB -->
+        <div class="tab-panel" id="eventsTab">
+          <div class="panel-head">
+            <h3>CRUD de Eventos</h3>
+            <p>Adicionar, editar e apagar eventos.</p>
+          </div>
+
+          <div class="panel-grid">
+            <div class="glass-card panel-form-card">
+              <h4 id="eventFormTitle">Novo evento</h4>
+
+              <form id="eventForm">
+                <input type="hidden" id="eventId" />
+
+                <div class="form-group">
+                  <label for="eventTitle">Título</label>
+                  <input type="text" id="eventTitle" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="eventDescription">Descrição</label>
+                  <textarea id="eventDescription" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="eventDateLabel">Texto da data</label>
+                  <input type="text" id="eventDateLabel" placeholder="Ex: Sexta • 20:00" />
+                </div>
+
+                <div class="form-group">
+                  <label for="eventImageFile">Imagem</label>
+                  <input type="file" id="eventImageFile" accept="image/*" />
+                  <small class="field-help" id="eventImageStatus">Nenhuma imagem selecionada.</small>
+                  <div class="image-preview-wrap">
+                    <img id="eventImagePreview" class="image-preview hidden" alt="Pré-visualização do evento" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="eventImageUrl">URL da imagem</label>
+                  <input type="text" id="eventImageUrl" readonly />
+                </div>
+
+                <div class="form-group">
+                  <label for="eventWhatsappText">Texto do WhatsApp</label>
+                  <textarea id="eventWhatsappText" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="eventSortOrder">Ordem</label>
+                  <input type="number" id="eventSortOrder" value="0" />
+                </div>
+
+                <div class="form-check">
+                  <input type="checkbox" id="eventActive" checked />
+                  <label for="eventActive">Ativo</label>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold">Salvar</button>
+                  <button type="button" class="btn btn-outline" id="eventCancelBtn">Cancelar</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="glass-card panel-list-card">
+              <h4>Eventos cadastrados</h4>
+              <div id="eventsList" class="admin-list"></div>
+            </div>
+          </div>
+        </div>
+        <!-- FIM: EVENTS TAB -->
+
+        <!-- INÍCIO: GALLERY TAB -->
+        <div class="tab-panel" id="galleryTab">
+          <div class="panel-head">
+            <h3>CRUD da Galeria</h3>
+            <p>Adicionar, editar e apagar imagens da galeria.</p>
+          </div>
+
+          <div class="panel-grid">
+            <div class="glass-card panel-form-card">
+              <h4 id="galleryFormTitle">Nova imagem</h4>
+
+              <form id="galleryForm">
+                <input type="hidden" id="galleryId" />
+
+                <div class="form-group">
+                  <label for="galleryTitle">Título</label>
+                  <input type="text" id="galleryTitle" />
+                </div>
+
+                <div class="form-group">
+                  <label for="galleryDescription">Descrição</label>
+                  <textarea id="galleryDescription" rows="4" placeholder="Descrição da imagem"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="galleryImageFile">Imagem</label>
+                  <input type="file" id="galleryImageFile" accept="image/*" />
+                  <small class="field-help" id="galleryImageStatus">Nenhuma imagem selecionada.</small>
+                  <div class="image-preview-wrap">
+                    <img id="galleryImagePreview" class="image-preview hidden" alt="Pré-visualização da galeria" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="galleryImageUrl">URL da imagem</label>
+                  <input type="text" id="galleryImageUrl" readonly required />
+                </div>
+
+                <div class="form-group">
+                  <label for="gallerySortOrder">Ordem</label>
+                  <input type="number" id="gallerySortOrder" value="0" />
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold">Salvar</button>
+                  <button type="button" class="btn btn-outline" id="galleryCancelBtn">Cancelar</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="glass-card panel-list-card">
+              <h4>Imagens cadastradas</h4>
+              <div id="galleryList" class="admin-list"></div>
+            </div>
+          </div>
+        </div>
+        <!-- FIM: GALLERY TAB -->
+      </section>
+    </main>
+
+    <div id="globalMessage" class="global-message"></div>
+  </section>
+  <!-- FIM: Painel -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

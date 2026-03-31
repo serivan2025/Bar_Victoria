@@ -34,6 +34,27 @@ const reservationForm = document.getElementById("reservationForm");
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightboxImage");
 const lightboxClose = document.getElementById("lightboxClose");
+
+/* =========================================
+   INÍCIO: Seletores da modal de evento
+========================================= */
+const eventModalOverlay = document.getElementById("eventModalOverlay");
+const eventModalClose = document.getElementById("eventModalClose");
+const eventReservationForm = document.getElementById("eventReservationForm");
+
+const eventModalTitle = document.getElementById("eventModalTitle");
+const eventModalDateText = document.getElementById("eventModalDateText");
+
+const eventReserveTitle = document.getElementById("eventReserveTitle");
+const eventReserveDate = document.getElementById("eventReserveDate");
+
+const eventCustomerName = document.getElementById("eventCustomerName");
+const eventCustomerPhone = document.getElementById("eventCustomerPhone");
+const eventCustomerPeople = document.getElementById("eventCustomerPeople");
+const eventCustomerNotes = document.getElementById("eventCustomerNotes");
+/* =========================================
+   FIM: Seletores da modal de evento
+========================================= */
 /* =========================================
    FIM: Seletores principais
 ========================================= */
@@ -302,18 +323,19 @@ function generateOrderMessage() {
     itemsText += `${index + 1}. ${item.name} - ${item.quantity}x - ${formatPrice(item.price * item.quantity)}\n`;
   });
 
-  const message =
-`Olá, quero fazer este pedido no Bar Da Victoria:
+  return `Ola Victoria Bar
+
+Quero fazer um pedido:
 
 ${itemsText}
 Total estimado: ${formatPrice(calculateOrderTotal())}
 
 Nome: ${customerName}
 Telefone: ${customerPhone}
-Mesa ou local: ${customerLocation || "Não informado"}
-Observação: ${customerNotes || "Nenhuma"}`;
+Mesa ou referencia: ${customerLocation || "Nao informado"}
+Observacao: ${customerNotes || "Nenhuma"}
 
-  return message;
+Aguardo confirmacao`;
 }
 
 function sendOrderToWhatsApp(event) {
@@ -336,18 +358,22 @@ function generateReservationMessage() {
   const reserveNotes = document.getElementById("reserveNotes")?.value.trim();
 
   if (!reserveName || !reservePhone || !reserveDate || !reserveTime || !reservePeople) {
-    alert("Preencha todos os campos obrigatórios da reserva.");
+    alert("Preencha todos os campos obrigatorios da reserva.");
     return null;
   }
 
-  return `Olá, quero fazer uma reserva no Bar Da Victoria.
+  return `Ola Victoria Bar
+
+Quero fazer uma reserva:
 
 Nome: ${reserveName}
 Telefone: ${reservePhone}
 Data: ${reserveDate}
 Hora: ${reserveTime}
 Pessoas: ${reservePeople}
-Observação: ${reserveNotes || "Nenhuma"}`;
+Observacao: ${reserveNotes || "Nenhuma"}
+
+Aguardo confirmacao`;
 }
 
 function sendReservationToWhatsApp(event) {
@@ -362,6 +388,121 @@ function sendReservationToWhatsApp(event) {
 }
 /* =========================================
    FIM: Funções do WhatsApp
+========================================= */
+
+
+/* =========================================
+   INÍCIO: Modal de reserva de evento
+========================================= */
+function openEventReservationModal(eventTitle, eventDate) {
+  if (!eventModalOverlay) return;
+
+  if (eventReserveTitle) eventReserveTitle.value = eventTitle || "";
+  if (eventReserveDate) eventReserveDate.value = eventDate || "";
+
+  if (eventModalTitle) {
+    eventModalTitle.textContent = eventTitle || "Reservar evento";
+  }
+
+  if (eventModalDateText) {
+    eventModalDateText.textContent = eventDate
+      ? `Evento: ${eventDate}`
+      : "Preencha os dados para confirmar no WhatsApp.";
+  }
+
+  if (eventCustomerName) eventCustomerName.value = "";
+  if (eventCustomerPhone) eventCustomerPhone.value = "";
+  if (eventCustomerPeople) eventCustomerPeople.value = "2";
+  if (eventCustomerNotes) eventCustomerNotes.value = "";
+
+  eventModalOverlay.classList.add("active");
+  body.classList.add("lightbox-open");
+
+  setTimeout(() => {
+    eventCustomerName?.focus();
+  }, 120);
+}
+
+function closeEventReservationModal() {
+  if (!eventModalOverlay) return;
+
+  eventModalOverlay.classList.remove("active");
+  body.classList.remove("lightbox-open");
+}
+
+function generateEventReservationMessage() {
+  const title = eventReserveTitle?.value.trim();
+  const date = eventReserveDate?.value.trim();
+  const name = eventCustomerName?.value.trim();
+  const phone = eventCustomerPhone?.value.trim();
+  const people = eventCustomerPeople?.value.trim();
+  const notes = eventCustomerNotes?.value.trim();
+
+  if (!name || !phone || !people) {
+    alert("Preencha nome, telefone e numero de pessoas.");
+    return null;
+  }
+
+  return `Ola Victoria Bar
+
+Quero fazer uma reserva para o evento:
+
+Evento: ${title || "Evento"}
+Data do evento: ${date || "Data a confirmar"}
+
+Nome: ${name}
+Telefone: ${phone}
+Pessoas: ${people}
+Observacao: ${notes || "Nenhuma"}
+
+Aguardo confirmacao`;
+}
+
+function sendEventReservationToWhatsApp(event) {
+  event.preventDefault();
+
+  const message = generateEventReservationMessage();
+
+  if (!message) return;
+
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, "_blank");
+
+  closeEventReservationModal();
+}
+
+function bindEventReservationButtons() {
+  const eventButtons = document.querySelectorAll(".event-reserve-btn");
+
+  eventButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const title = button.dataset.eventTitle || "Evento";
+      const date = button.dataset.eventDate || "Data a confirmar";
+
+      openEventReservationModal(title, date);
+    });
+  });
+}
+
+function bindEventModalActions() {
+  if (eventModalClose) {
+    eventModalClose.addEventListener("click", closeEventReservationModal);
+  }
+
+  if (eventModalOverlay) {
+    eventModalOverlay.addEventListener("click", (event) => {
+      if (event.target === eventModalOverlay) {
+        closeEventReservationModal();
+      }
+    });
+  }
+
+  if (eventReservationForm) {
+    eventReservationForm.addEventListener("submit", sendEventReservationToWhatsApp);
+  }
+}
+/* =========================================
+   FIM: Modal de reserva de evento
 ========================================= */
 
 
@@ -382,7 +523,7 @@ function renderGridError(container, message) {
 ========================================= */
 function validateSupabaseClient() {
   if (typeof supabaseClient === "undefined") {
-    console.error("supabaseClient não foi encontrado. Verifica o ficheiro supabase.js");
+    console.error("supabaseClient nao foi encontrado. Verifica o ficheiro supabase.js");
     return false;
   }
 
@@ -399,7 +540,7 @@ function validateSupabaseClient() {
 async function loadMenuItems() {
   if (!menuGrid) return;
   if (!validateSupabaseClient()) {
-    renderGridError(menuGrid, "Supabase não configurado.");
+    renderGridError(menuGrid, "Supabase nao configurado.");
     return;
   }
 
@@ -419,7 +560,7 @@ async function loadMenuItems() {
   }
 
   if (!data || data.length === 0) {
-    renderGridError(menuGrid, "Nenhum item disponível no menu.");
+    renderGridError(menuGrid, "Nenhum item disponivel no menu.");
     return;
   }
 
@@ -471,7 +612,7 @@ async function loadMenuItems() {
 async function loadEvents() {
   if (!eventsGrid) return;
   if (!validateSupabaseClient()) {
-    renderGridError(eventsGrid, "Supabase não configurado.");
+    renderGridError(eventsGrid, "Supabase nao configurado.");
     return;
   }
 
@@ -491,7 +632,7 @@ async function loadEvents() {
   }
 
   if (!data || data.length === 0) {
-    renderGridError(eventsGrid, "Nenhum evento disponível.");
+    renderGridError(eventsGrid, "Nenhum evento disponivel.");
     return;
   }
 
@@ -499,10 +640,8 @@ async function loadEvents() {
     .map((eventItem) => {
       const title = escapeHtml(eventItem.title);
       const description = escapeHtml(eventItem.description || "");
-      const dateLabel = escapeHtml(eventItem.event_date_label || "");
+      const dateLabel = escapeHtml(eventItem.event_date_label || "Data a confirmar");
       const imageUrl = escapeHtml(eventItem.image_url || "");
-      const whatsappText =
-        eventItem.whatsapp_text || `Olá, quero reservar para ${eventItem.title} no Bar Da Victoria.`;
 
       return `
         <article class="event-card glass-card">
@@ -515,18 +654,21 @@ async function loadEvents() {
             <h3>${title}</h3>
             <p>${description}</p>
 
-            <a
-              href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappText)}"
-              target="_blank"
-              class="btn btn-small btn-outline"
+            <button
+              type="button"
+              class="btn btn-small btn-outline event-reserve-btn"
+              data-event-title="${title}"
+              data-event-date="${dateLabel}"
             >
               Reservar
-            </a>
+            </button>
           </div>
         </article>
       `;
     })
     .join("");
+
+  bindEventReservationButtons();
 }
 /* =========================================
    FIM: Carregar eventos do Supabase
@@ -539,7 +681,7 @@ async function loadEvents() {
 async function loadGallery() {
   if (!galleryGrid) return;
   if (!validateSupabaseClient()) {
-    renderGridError(galleryGrid, "Supabase não configurado.");
+    renderGridError(galleryGrid, "Supabase nao configurado.");
     return;
   }
 
@@ -558,7 +700,7 @@ async function loadGallery() {
   }
 
   if (!data || data.length === 0) {
-    renderGridError(galleryGrid, "Nenhuma imagem disponível.");
+    renderGridError(galleryGrid, "Nenhuma imagem disponivel.");
     return;
   }
 
@@ -740,6 +882,7 @@ function bindEscapeKey() {
     if (event.key === "Escape") {
       closeLightbox();
       closeMobileMenu();
+      closeEventReservationModal();
     }
   });
 }
@@ -770,6 +913,7 @@ async function initApp() {
 
   closeMobileMenuOnLinkClick();
   bindClearOrderButton();
+  bindEventModalActions();
 
   if (orderForm) {
     orderForm.addEventListener("submit", sendOrderToWhatsApp);

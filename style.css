@@ -1545,3 +1545,106 @@ textarea {
 /* =========================
    FIM: Responsividade
 ========================= */
+/* =========================================
+   INÍCIO: Modal de reserva de evento
+========================================= */
+.event-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 12, 0.78);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: 0.28s ease;
+}
+
+.event-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.event-modal {
+  width: 100%;
+  max-width: 560px;
+  border-radius: 24px;
+  padding: 26px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(16, 19, 30, 0.92);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  transform: translateY(18px) scale(0.98);
+  transition: 0.28s ease;
+}
+
+.event-modal-overlay.active .event-modal {
+  transform: translateY(0) scale(1);
+}
+
+.event-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+  transition: 0.2s ease;
+}
+
+.event-modal-close:hover {
+  background: rgba(255,255,255,0.16);
+  transform: scale(1.05);
+}
+
+.event-modal-header {
+  margin-bottom: 20px;
+}
+
+.event-modal-header h3 {
+  margin: 8px 0 8px;
+  font-size: 28px;
+}
+
+.event-modal-header p {
+  opacity: 0.82;
+}
+
+.event-modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.event-modal-form .full-width {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .event-modal {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .event-modal-form {
+    grid-template-columns: 1fr;
+  }
+
+  .event-modal-header h3 {
+    font-size: 24px;
+  }
+}
+/* =========================================
+   FIM: Modal de reserva de evento
+========================================= */

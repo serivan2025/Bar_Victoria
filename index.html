@@ -260,9 +260,9 @@
       <div class="container">
         <div class="section-header">
           <p class="section-tag">Eventos</p>
-          <h2>Noites especiais que geram movimento</h2>
+          <h2>Eventos Especias no Bar da Victoria</h2>
           <p>
-            Eventos ajudam a dar vida ao espaço, criar desejo e trazer mais clientes.
+            Divirta-se e Crie Memorias unicas no Bar da Victoria .
           </p>
         </div>
 
@@ -340,8 +340,8 @@
               </div>
 
               <div class="form-group">
-                <label for="customerLocation">Mesa ou local</label>
-                <input type="text" id="customerLocation" placeholder="Mesa 4 / Retirada / Entrega" />
+                <label for="customerLocation">Mesa ou referência</label>
+                <input type="text" id="customerLocation" placeholder="Mesa 4 / Área externa / Balcão" />
               </div>
 
               <div class="form-group">
@@ -422,10 +422,62 @@
     <img id="lightboxImage" src="" alt="Imagem ampliada" />
   </div>
   <!-- FIM: Lightbox da galeria -->
+   
+      <!-- INÍCIO: Modal de reserva de evento -->
+  <div class="event-modal-overlay" id="eventModalOverlay">
+    <div class="event-modal glass-card">
+      <button type="button" class="event-modal-close" id="eventModalClose" aria-label="Fechar">
+        ×
+      </button>
+
+      <div class="event-modal-header">
+        <p class="section-tag">Reserva de evento</p>
+        <h3 id="eventModalTitle">Reservar evento</h3>
+        <p id="eventModalDateText">Preencha os dados para confirmar no WhatsApp.</p>
+      </div>
+
+      <form id="eventReservationForm" class="event-modal-form">
+        <input type="hidden" id="eventReserveTitle" />
+        <input type="hidden" id="eventReserveDate" />
+
+        <div class="form-group">
+          <label for="eventCustomerName">Nome</label>
+          <input type="text" id="eventCustomerName" placeholder="Seu nome" required />
+        </div>
+
+        <div class="form-group">
+          <label for="eventCustomerPhone">Telefone</label>
+          <input type="text" id="eventCustomerPhone" placeholder="84xxxxxxx" required />
+        </div>
+
+        <div class="form-group">
+          <label for="eventCustomerPeople">Pessoas</label>
+          <input type="number" id="eventCustomerPeople" min="1" value="2" required />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="eventCustomerNotes">Observação</label>
+          <textarea
+            id="eventCustomerNotes"
+            rows="4"
+            placeholder="Ex: aniversário, mesa próxima ao palco, etc."
+          ></textarea>
+        </div>
+
+        <div class="full-width">
+          <button type="submit" class="btn btn-gold btn-full">
+            Enviar reserva no WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- FIM: Modal de reserva de evento -->
 
   <!-- INÍCIO: Botão flutuante WhatsApp -->
+
   <a
-    href="https://wa.me/258845355993?text=Olá,%20quero%20mais%20informações%20sobre%20o%20Bar%20Da%20Victoria."
+    href="https://wa.me/258845355993?text=Olá%20👋%20Victoria%20Bar%0A%0AQuero%20fazer%20uma%20reserva:%0A%0A👤%20Nome:%0A📞%20Telefone:%0A📅%20Data:%0A⏰%20Hora:%0A👥%20Pessoas:%0A📝%20Observação:%0A%0AAguardo%20confirmação%20🙏"
     target="_blank"
     class="floating-whatsapp"
     aria-label="WhatsApp"

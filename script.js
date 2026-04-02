@@ -2,7 +2,7 @@
    INÍCIO: Configuração global
 ========================================= */
 const order = [];
-const whatsappNumber = "258845355993";
+const whatsappNumber = "258867256070";
 let parallaxTicking = false;
 /* =========================================
    FIM: Configuração global
